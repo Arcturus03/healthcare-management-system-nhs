@@ -1,8 +1,4 @@
-package model;
-
 import model.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Simple test to verify all model classes compile and work correctly.
