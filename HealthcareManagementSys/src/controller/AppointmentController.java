@@ -105,10 +105,10 @@ public class AppointmentController {
      * @return true if updated, false if not found
      */
     public boolean updateAppointment(String appointmentId,
-                                     String newDateTime,
-                                     String newLocation,
-                                     String newStatus,
-                                     String newReason) {
+                                    String newDateTime,
+                                    String newLocation,
+                                    String newStatus,
+                                    String newReason) {
 
         Appointment existing = getAppointment(appointmentId);
 
