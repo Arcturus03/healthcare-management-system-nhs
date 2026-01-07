@@ -13,22 +13,19 @@ public class DataLoader {
         List<Patient> patients = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             String line;
-            reader.readLine(); // Skip header
+            reader.readLine(); // Skip header: userId,name,nhsNumber,email,phone
 
             while ((line = reader.readLine()) != null) {
-                // Use the regex instead of simple split(",")
                 String[] parts = line.split(CSV_SPLIT_REGEX, -1); 
                 
+                // CSV columns: 0=userId, 1=name, 2=nhsNumber, 3=email, 4=phone
                 if (parts.length >= 5) {
-                    // Clean up quotes from fields (e.g., "Birmingham" -> Birmingham)
-                    String address = parts[8].replace("\"", "").trim(); 
-                    
                     Patient p = new Patient(
                             parts[0].trim(),  // userId
-                            parts[1].trim() + " " + parts[2].trim(),  // Combine First/Last Name
-                            parts[7].trim(),  // email
-                            parts[6].trim(),  // phone
-                            parts[4].trim()   // nhsNumber
+                            parts[1].trim(),  // name
+                            parts[3].trim(),  // email
+                            parts[4].trim(),  // phone
+                            parts[2].trim()   // nhsNumber
                     );
                     patients.add(p);
                 }
@@ -38,11 +35,13 @@ public class DataLoader {
         return patients;
     }
 
+
     public List<GP> loadGPs(String filepath) throws IOException {
         List<GP> gps = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
         String line;
         reader.readLine(); // Skip header
+
 
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split(",");
@@ -63,25 +62,27 @@ public class DataLoader {
         return gps;
     }
 
+
     public List<Appointment> loadAppointments(String filepath) throws IOException {
         List<Appointment> appointments = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
             String line;
             reader.readLine(); // Skip header
-
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(CSV_SPLIT_REGEX, -1);
-                // CSV Cols:
-                // 0:id, 1:patient, 2:clinician, 3:facility, 4:date(YYYY-MM-DD), 5:time, ...
-                if (parts.length >= 10) {
+                // Columns: 0=id, 1=patientId, 2=clinicianId, 3=dateTime, 4=status, 5=reason
+                if (parts.length >= 5) {
                     Appointment app = new Appointment(
-                        parts[0].trim(), // id
-                        parts[1].trim(), // patientId
-                        parts[2].trim(), // clinicianId
-                        parts[4].trim() + " " + parts[5].trim(), // dateTime
-                        parts[9].trim() // reason (using reason_for_visit)
+                        parts[0].trim(),  // appointmentId
+                        parts[1].trim(),  // patientId
+                        parts[2].trim(),  // clinicianId
+                        parts[3].trim(),  // dateTime
+                        "Surgery"         // location (not in CSV, use default)
                     );
-                    app.setStatus(parts[8].trim()); // status
+                    app.setStatus(parts[4].trim());  // status
+                    if (parts.length > 5 && !parts[5].trim().equals("null")) {
+                        app.setReason(parts[5].trim());
+                    }
                     appointments.add(app);
                 }
             }
@@ -90,6 +91,7 @@ public class DataLoader {
         return appointments;
     }
 
+
     public List<Prescription> loadPrescriptions(String filepath) throws IOException {
         List<Prescription> prescriptions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
@@ -97,16 +99,18 @@ public class DataLoader {
             reader.readLine(); // Skip header
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(CSV_SPLIT_REGEX, -1);
-                // CSV: 0:id, 1:pat, 2:clin, ... 5:med, 6:dosage, ...
-                if (parts.length >= 7) {
+                // Columns: 0=id, 1=patientId, 2=medication, 3=dosage, 4=status
+                if (parts.length >= 4) {
                     Prescription p = new Prescription(
-                        parts[0].trim(),
-                        parts[1].trim(),
-                        parts[2].trim(),
-                        parts[5].trim(),
-                        parts[6].trim()
+                        parts[0].trim(),  // prescriptionId
+                        parts[1].trim(),  // patientId
+                        "C001",           // clinicianId (not in CSV, use default)
+                        parts[2].trim(),  // medication
+                        parts[3].trim()   // dosage
                     );
-                    if(parts.length > 12) p.setStatus(parts[12].trim());
+                    if (parts.length > 4) {
+                        p.setStatus(parts[4].trim());  // status
+                    }
                     prescriptions.add(p);
                 }
             }
@@ -122,18 +126,21 @@ public class DataLoader {
             reader.readLine(); // Skip header
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(CSV_SPLIT_REGEX, -1);
-                // CSV: 0:id, 1:pat, 2:from, 3:to, ... 7:urgency, 8:reason, 9:summary, ... 11:status
-                if (parts.length >= 10) {
+                // Columns: 0=id, 1=patientId, 2=fromGP, 3=toSpecialist, 4=reason, 5=status, 6=urgency
+                if (parts.length >= 5) {
                     Referral r = new Referral(
-                        parts[0].trim(),
-                        parts[1].trim(),
-                        parts[2].trim(),
-                        parts[3].trim(),
-                        parts[8].trim()
+                        parts[0].trim(),  // referralId
+                        parts[1].trim(),  // patientId
+                        parts[2].trim(),  // fromGpId
+                        parts[3].trim(),  // toSpecialistId
+                        parts[4].trim()   // reason
                     );
-                    r.setUrgencyLevel(parts[7].trim());
-                    r.setClinicalSummary(parts[9].trim());
-                    if(parts.length > 11) r.setStatus(parts[11].trim());
+                    if (parts.length > 6) {
+                        r.setUrgencyLevel(parts[6].trim());  // urgency
+                    }
+                    if (parts.length > 5) {
+                        r.setStatus(parts[5].trim());  // status
+                    }
                     referrals.add(r);
                 }
             }

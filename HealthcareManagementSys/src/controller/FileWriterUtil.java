@@ -38,6 +38,37 @@ public class FileWriterUtil {
         System.out.println("Referrals written to " + filepath);
     }
 
+    public static void writePatientsToFile(List<Patient> patients, String filepath) throws IOException {
+        FileWriter writer = new FileWriter(filepath);
+        writer.write("userId,name,nhsNumber,email,phone\n");
+
+        for (Patient p : patients) {
+            writer.write(p.getUserId() + "," +
+                    p.getName() + "," +
+                    p.getNhsNumber() + "," +
+                    p.getEmail() + "," +
+                    p.getPhone() + "\n");
+        }
+        writer.close();
+        System.out.println("Patients written to " + filepath);
+    }
+
+    public static void writeAppointmentsToFile(List<Appointment> appointments, String filepath) throws IOException {
+        FileWriter writer = new FileWriter(filepath);
+        writer.write("appointmentId,patientId,clinicianId,dateTime,status,reason\n");
+
+        for (Appointment a : appointments) {
+            writer.write(a.getAppointmentId() + "," +
+                    a.getPatientId() + "," +
+                    a.getClinicianId() + "," +
+                    a.getDateTime() + "," +
+                    a.getStatus() + "," +
+                    a.getReason() + "\n");
+        }
+        writer.close();
+        System.out.println("Appointments written to " + filepath);
+    }
+
     /**
      * Generates a readable text referral letter (Requirement: output text content)
      */
