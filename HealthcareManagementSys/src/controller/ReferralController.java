@@ -11,13 +11,12 @@ import java.util.*;
  * WHY SINGLETON FOR REFERRALS?
  * - Only ONE referral processing queue across entire system
  * - Prevents duplicate referral processing
- * - Ensures consistent email logging
  * - Maintains single audit trail
  *
  * REFERRAL WORKFLOW:
  * 1. GP creates referral to specialist
  * 2. ReferralManager queues it (Singleton ensures single queue)
- * 3. Email notification sent (logged by Singleton)
+ * 3. System updates EHR with referral info
  * 4. Specialist reviews and accepts/rejects
  * 5. Patient record updated
  *
@@ -60,11 +59,11 @@ public class ReferralController {
      * WHAT IT DOES:
      * 1. Adds referral to our local list (for GUI)
      * 2. Sends referral to ReferralManager Singleton
-     * 3. ReferralManager queues it, sends email, updates EHR
+     * 3. ReferralManager queues it and updates EHR
      *
      * WHY TWO PLACES?
      * - Local list: fast access for GUI display
-     * - ReferralManager: official processing with emails/audit trail
+     * - ReferralManager: official processing with audit trail
      *
      * @param referral The Referral object to create
      * @return true if created successfully
@@ -82,12 +81,11 @@ public class ReferralController {
         // Send to ReferralManager Singleton for OFFICIAL processing
         // This handles:
         // - Queuing
-        // - Email generation
         // - EHR update
         // - Audit trail
         referralManager.createReferral(referral);
 
-        System.out.println("✓ Referral created and queued: " + referral.getReferralId());
+        System.out.println(" Referral created and queued: " + referral.getReferralId());
 
         return true;
     }
@@ -215,7 +213,7 @@ public class ReferralController {
         // Update status
         existing.setStatus(newStatus);
 
-        System.out.println("✓ Referral status updated: " + referralId + " → " + newStatus);
+        System.out.println(" Referral status updated: " + referralId + " → " + newStatus);
 
         return true;
     }
@@ -238,7 +236,7 @@ public class ReferralController {
         boolean removed = referrals.removeIf(ref -> ref.getReferralId().equals(referralId));
 
         if (removed) {
-            System.out.println("✓ Referral deleted: " + referralId);
+            System.out.println(" Referral deleted: " + referralId);
         } else {
             System.err.println("ERROR: Referral " + referralId + " not found");
         }
@@ -273,32 +271,21 @@ public class ReferralController {
     }
 
     /**
-     * SAVE ALL REFERRALS TO FILES
+     * SAVE ALL REFERRALS TO CSV FILE
      *
-     * WHAT IT DOES:
-     * 1. Saves all emails to output/referral_emails.txt
-     * 2. Saves all referral data to output/referrals_output.csv
+     * Persists all referrals to output file for archival/backup.
+     * Can be imported to Excel, databases, or other analysis tools.
      *
-     * WHY BOTH FILES?
-     * - .txt file: shows what emails would be sent (readable format)
-     * - .csv file: can be imported to Excel, databases, archives
-     *
-     * @param emailFilepath Where to save emails
-     * @param csvFilepath Where to save CSV
+     * @param filepath Where to save the CSV file
      * @throws IOException If file writing fails
      */
-    public void saveReferralsToFiles(String emailFilepath, String csvFilepath) throws IOException {
+    public void saveReferralsToFile(String filepath) throws IOException {
         try {
-            // Save emails through Singleton
-            referralManager.persistEmailsToFile(emailFilepath);
-
             // Save referrals as CSV through Singleton
-            referralManager.persistReferralsToFile(csvFilepath);
-
-            System.out.println("✓ Referrals persisted to both files");
-
+            referralManager.persistReferralsToFile(filepath);
+            System.out.println(" Referrals persisted to file: " + filepath);
         } catch (IOException e) {
-            System.err.println("ERROR: Could not save referrals to files");
+            System.err.println("ERROR: Could not save referrals to file");
             throw e;
         }
     }
@@ -322,6 +309,6 @@ public class ReferralController {
     public void loadReferralsFromData(List<Referral> loadedReferrals) {
         referrals.clear();
         referrals.addAll(loadedReferrals);
-        System.out.println("✓ Loaded " + referrals.size() + " referrals into controller");
+        System.out.println(" Loaded " + referrals.size() + " referrals into controller");
     }
 }

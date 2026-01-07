@@ -45,7 +45,7 @@ public class AppointmentController {
         appointments.add(appointment);
 
         // Appointment.java provides getDateTime(), not getAppointmentDate().
-        System.out.println("✓ Appointment added: " + appointment.getAppointmentId()
+        System.out.println(" Appointment added: " + appointment.getAppointmentId()
                 + " - " + appointment.getPatientId()
                 + " at " + appointment.getDateTime());
 
@@ -134,7 +134,7 @@ public class AppointmentController {
             existing.setReason(newReason);
         }
 
-        System.out.println("✓ Appointment updated: " + appointmentId);
+        System.out.println(" Appointment updated: " + appointmentId);
         return true;
     }
 
@@ -148,7 +148,7 @@ public class AppointmentController {
         boolean removed = appointments.removeIf(apt -> apt.getAppointmentId().equals(appointmentId));
 
         if (removed) {
-            System.out.println("✓ Appointment deleted: " + appointmentId);
+            System.out.println(" Appointment deleted: " + appointmentId);
         } else {
             System.err.println("ERROR: Appointment " + appointmentId + " not found");
         }
@@ -186,6 +186,6 @@ public class AppointmentController {
             appointments.addAll(loadedAppointments);
         }
 
-        System.out.println("✓ Loaded " + appointments.size() + " appointments into controller");
+        System.out.println(" Loaded " + appointments.size() + " appointments into controller");
     }
 }

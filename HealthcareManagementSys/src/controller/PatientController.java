@@ -60,41 +60,43 @@ public class PatientController {
 
     /**
      * CREATE: Add a new patient to the system
-     *
+     * <p>
      * WHAT IT DOES:
      * 1. Takes a Patient object from GUI
      * 2. Adds it to the patients list
      * 3. This patient is now in the system
-     *
+     * <p>
      * WHEN IS THIS CALLED?
      * - New patient registration (receptionist adds patient)
      * - Loading patients from CSV file
      * - Importing patient data from another system
-     *
+     * <p>
      * EXAMPLE:
      * Patient newPatient = new Patient("P001", "John Smith", "john@email.com", "0123456789", "NHS123");
      * patientController.addPatient(newPatient);
      * // John Smith is now in the system
-     *
+     * <p>
      * WHY NO RETURN VALUE?
      * - In real systems, would return boolean (true if added, false if failed)
      * - This simple version always succeeds (assumes valid input)
-     *
+     * <p>
      * FUTURE IMPROVEMENT:
      * - Add validation (check if patient already exists)
      * - Check for duplicate NHS numbers
      * - Return boolean for error handling
      *
      * @param p The Patient object to add to the system
+     * @return
      */
-    public void addPatient(Patient p) {
+    public boolean addPatient(Patient p) {
         // Add the patient to the list
         // .add() appends to end of list
         // Time complexity: O(1) - always fast, regardless of list size
         patients.add(p);
 
         // Print confirmation to console
-        System.out.println("✓ Patient added: " + p.getName() + " (ID: " + p.getUserId() + ")");
+        System.out.println(" Patient added: " + p.getName() + " (ID: " + p.getUserId() + ")");
+        return true;
     }
 
     /**
@@ -212,7 +214,7 @@ public class PatientController {
      */
     public void updatePatient(Patient p) {
         // Find the existing patient with this ID
-        // getPatient() returns the actual object in our list (not a copy)
+        // getPatient() returns the actual object list
         Patient existing = getPatient(p.getUserId());
 
         // Check if patient was found
@@ -222,7 +224,7 @@ public class PatientController {
             existing.setName(p.getName());
 
             // Print confirmation
-            System.out.println("✓ Patient updated: " + p.getUserId() + " → " + p.getName());
+            System.out.println(" Patient updated: " + p.getUserId() + " → " + p.getName());
         } else {
             // Patient doesn't exist, print error
             System.err.println("ERROR: Patient " + p.getUserId() + " not found. Cannot update.");
@@ -231,61 +233,63 @@ public class PatientController {
 
     /**
      * DELETE: Remove a patient from the system
-     *
+     * <p>
      * WHAT IT DOES:
      * 1. Finds patient with matching ID
      * 2. Removes that patient from the list
      * 3. Patient is no longer in system
-     *
+     * <p>
      * WHEN IS THIS CALLED?
      * - Patient requests data deletion (GDPR right to be forgotten)
      * - Patient deactivates account
      * - Admin removes duplicate patient records
      * - Cleaning up test data
-     *
+     * <p>
      * WHY NOT JUST SET STATUS TO "INACTIVE"?
      * - In real healthcare: NEVER delete! Use status instead (legal requirement)
      * - We delete here for simplicity (this is learning project, not production)
      * - In production: mark as "Deleted" with timestamp, keep record forever
-     *
+     * <p>
      * HOW IT WORKS:
      * removeIf() = remove elements matching condition
      * - Loops through list
      * - If condition true, removes that element
      * - Stops checking when done
-     *
+     * <p>
      * EXAMPLE:
      * patientController.deletePatient("P001");
      * // Now patient with ID "P001" is removed from list
-     *
+     * <p>
      * ALTERNATIVE (Old-style approach):
      * public void deletePatient(String patientId) {
-     *     for (int i = 0; i < patients.size(); i++) {
-     *         if (patients.get(i).getUserId().equals(patientId)) {
-     *             patients.remove(i);  // Remove this patient
-     *             break;
-     *         }
-     *     }
+     * for (int i = 0; i < patients.size(); i++) {
+     * if (patients.get(i).getUserId().equals(patientId)) {
+     * patients.remove(i);  // Remove this patient
+     * break;
      * }
-     *
+     * }
+     * }
+     * <p>
      * WHY IS STREAM BETTER?
      * - More readable
      * - Less error-prone (no index out of bounds)
      * - Functional style
      *
      * @param patientId The ID of patient to remove (e.g., "P001")
+     * @return
      */
-    public void deletePatient(String patientId) {
+    public boolean deletePatient(String patientId) {
         // Remove all patients matching this condition
         // removeIf() returns true if at least one was removed
         boolean wasRemoved = patients.removeIf(p -> p.getUserId().equals(patientId));
 
         // Print confirmation or error
         if (wasRemoved) {
-            System.out.println("✓ Patient deleted: " + patientId);
+            System.out.println(" Patient deleted: " + patientId);
         } else {
             System.err.println("ERROR: Patient " + patientId + " not found. Cannot delete.");
         }
+        return wasRemoved;
     }
 
     /**
@@ -397,7 +401,7 @@ public class PatientController {
         patients.addAll(loadedPatients);
 
         // Print confirmation
-        System.out.println("✓ Loaded " + patients.size() + " patients from CSV into controller");
+        System.out.println(" Loaded " + patients.size() + " patients from CSV into controller");
     }
 
     /**

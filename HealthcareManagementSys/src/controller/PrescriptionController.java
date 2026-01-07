@@ -47,7 +47,7 @@ public class PrescriptionController {
 
         prescriptions.add(prescription);
 
-        System.out.println("✓ Prescription added: " + prescription.getPrescriptionId()
+        System.out.println(" Prescription added: " + prescription.getPrescriptionId()
                 + " - " + prescription.getMedication()
                 + " (" + prescription.getStatus() + ")"
                 + " issued on " + prescription.getIssuedDate());
@@ -142,7 +142,7 @@ public class PrescriptionController {
             existing.setStatus(newStatus);
         }
 
-        System.out.println("✓ Prescription status updated: " + prescriptionId + " → " + existing.getStatus());
+        System.out.println(" Prescription status updated: " + prescriptionId + " → " + existing.getStatus());
         return true;
     }
 
@@ -191,7 +191,7 @@ public class PrescriptionController {
             existing.setNotes(newNotes);
         }
 
-        System.out.println("✓ Prescription updated: " + prescriptionId);
+        System.out.println(" Prescription updated: " + prescriptionId);
         return true;
     }
 
@@ -205,7 +205,7 @@ public class PrescriptionController {
         boolean removed = prescriptions.removeIf(p -> p.getPrescriptionId().equals(prescriptionId));
 
         if (removed) {
-            System.out.println("✓ Prescription deleted: " + prescriptionId);
+            System.out.println(" Prescription deleted: " + prescriptionId);
         } else {
             System.err.println("ERROR: Prescription " + prescriptionId + " not found");
         }
@@ -256,6 +256,6 @@ public class PrescriptionController {
             prescriptions.addAll(loadedPrescriptions);
         }
 
-        System.out.println("✓ Loaded " + prescriptions.size() + " prescriptions into controller");
+        System.out.println(" Loaded " + prescriptions.size() + " prescriptions into controller");
     }
 }
