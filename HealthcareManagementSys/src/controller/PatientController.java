@@ -141,8 +141,7 @@ public class PatientController {
      * public Patient getPatient(String patientId) {
      *     for (Patient p : patients) {
      *         if (p.getUserId().equals(patientId)) {
-     *             return p;  // Found it!
-     *         }
+     *             return p;  // Found it!}
      *     }
      *     return null;  // Not found
      * }
