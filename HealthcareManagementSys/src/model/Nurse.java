@@ -9,7 +9,7 @@ package model;
 public class Nurse extends User {
 
     // === NURSE-SPECIFIC ATTRIBUTES ===
-    private String nursingGrade;           // Grade level (e.g., "Band 5", "Band 6")
+    private String nursingGrade;           
     private String assignedPatientId;
 
     // === CONSTRUCTOR ===

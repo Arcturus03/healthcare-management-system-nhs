@@ -7,26 +7,15 @@ import java.time.LocalDate;
 /**
  * PrescriptionController manages all Prescription operations (CRUD).
  *
- * IMPORTANT:
- * This controller is written to match Prescription.java exactly:
- * - Uses clinicianId (not gpId)
- * - Uses duration (String) (not quantity)
- * - Status values align with model default: "Issued", plus "Collected", "Expired"
- * - issuedDate is LocalDate (read-only via getter)
- *
  * @author Hrithik Chandra
  * @version 1.0
  */
 public class PrescriptionController {
 
-    // === INSTANCE VARIABLES ===
+    //INSTANCE VARIABLES ===
     private List<Prescription> prescriptions;
 
-    /**
-     * CONSTRUCTOR
-     *
-     * Initializes an empty list ready to store prescriptions.
-     */
+    // Constructor
     public PrescriptionController() {
         this.prescriptions = new ArrayList<>();
     }
@@ -69,7 +58,6 @@ public class PrescriptionController {
     }
 
     /**
-     * READ: Get all prescriptions for a patient.
      *
      * @param patientId Patient ID
      * @return List of prescriptions for that patient
@@ -81,9 +69,7 @@ public class PrescriptionController {
     }
 
     /**
-     * READ: Get all prescriptions issued by a clinician (GP or Specialist).
-     *
-     * Prescription.java uses clinicianId, not gpId.
+     * READ: Get all prescriptions issued by a clinician (GP or Specialist)
      *
      * @param clinicianId Clinician ID
      * @return List of prescriptions issued by that clinician
@@ -97,7 +83,7 @@ public class PrescriptionController {
     /**
      * READ: Get all prescriptions with a given status.
      *
-     * Typical statuses in your model:
+     * Typical statuses in model:
      * - "Issued"
      * - "Collected"
      * - "Expired"
@@ -149,18 +135,12 @@ public class PrescriptionController {
     /**
      * UPDATE: Update prescription details.
      *
-     * Prescription.java supports:
-     * - medication
-     * - dosage
-     * - duration
-     * - notes
-     *
-     * @param prescriptionId ID of prescription to update
-     * @param newMedication Updated medication name (optional)
-     * @param newDosage Updated dosage (optional)
-     * @param newDuration Updated duration (optional)
-     * @param newNotes Updated notes (optional)
-     * @return true if updated, false if not found
+     * @param prescriptionId 
+     * @param newMedication 
+     * @param newDosage 
+     * @param newDuration 
+     * @param newNotes 
+     * @return 
      */
     public boolean updatePrescriptionDetails(String prescriptionId,
                                             String newMedication,
@@ -234,8 +214,7 @@ public class PrescriptionController {
     }
 
     /**
-     * COUNT: Total prescriptions.
-     *
+     * Total Prescriptions
      * @return count
      */
     public int getPrescriptionCount() {

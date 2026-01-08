@@ -12,10 +12,10 @@ import java.util.List;
 public class GP extends User {
 
     // === GP-SPECIFIC ATTRIBUTES ===
-    private String specialty;              // Medical specialty
-    private String practiceName;           // Name of GP practice/surgery
-    private List<String> prescriptions;    // List of prescriptions created
-    private List<String> referrals;        // List of referrals created
+    private String specialty;              
+    private String practiceName;           
+    private List<String> prescriptions;    
+    private List<String> referrals;        
 
     // === CONSTRUCTOR ===
     public GP(String userId, String name, String email, String phone, String specialty, String practiceName) {

@@ -21,7 +21,7 @@ public class HealthcareGUI extends JFrame {
     private JTable appointmentTable;
     private JTable prescriptionTable;
     private JTable referralTable;
-    private JTable clinicianTable;  // FIX 2: Add missing field
+    private JTable clinicianTable;  
 
     public HealthcareGUI() {
         // Initialize Controllers
@@ -29,7 +29,7 @@ public class HealthcareGUI extends JFrame {
         appointmentController = new AppointmentController();
         prescriptionController = new PrescriptionController();
         referralController = new ReferralController();
-        clinicianController = new ClinicianController();  // FIX 3: Initialize controller
+        clinicianController = new ClinicianController();  
 
         // Load Data
         loadData();
@@ -43,7 +43,7 @@ public class HealthcareGUI extends JFrame {
         // UI Initialization
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Patients", createPatientPanel());
-        tabbedPane.addTab("Clinicians", createClinicianPanel());  // FIX 4: Added semicolon
+        tabbedPane.addTab("Clinicians", createClinicianPanel());  
         tabbedPane.addTab("Appointments", createAppointmentPanel());
         tabbedPane.addTab("Prescriptions", createPrescriptionPanel());
         tabbedPane.addTab("Referrals", createReferralPanel());
@@ -86,7 +86,6 @@ public class HealthcareGUI extends JFrame {
 
     /**
      * Requirement: Data Persistence.
-     * Saves all in-memory data back to CSV files (simulating database update).
      */
     private void saveAllData() {
         try {
@@ -138,7 +137,7 @@ public class HealthcareGUI extends JFrame {
         // --- ADD ---
         JButton addBtn = new JButton("Add Patient");
         addBtn.addActionListener(e -> {
-            JTextField idField = new JTextField("P" + (model.getRowCount() + 100)); // Auto-gen suggestion
+            JTextField idField = new JTextField();
             JTextField nameField = new JTextField();
             JTextField emailField = new JTextField();
             JTextField phoneField = new JTextField();
@@ -418,19 +417,44 @@ public class HealthcareGUI extends JFrame {
             }
         });
 
+
+        // --- GENERATE SLIP ---
+        JButton slipBtn = new JButton("Generate Slip");
+        slipBtn.addActionListener(e -> {
+            int row = prescriptionTable.getSelectedRow();
+            if (row < 0) {
+                JOptionPane.showMessageDialog(this, "Select a prescription first.");
+                return;
+            }
+            
+            String id = (String) model.getValueAt(row, 0);
+            Prescription p = prescriptionController.getPrescription(id);
+            
+            if (p != null) {
+                try {
+                    String filename = "output/Prescription_" + id + ".txt";
+                    new java.io.File("output").mkdirs();
+                    FileWriterUtil.generatePrescriptionSlip(p, filename);
+                    JOptionPane.showMessageDialog(this, "Prescription slip generated: " + filename);
+                } catch (IOException ex) {
+                    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+                }
+            }
+        });
+
         JButton saveBtn = new JButton("Save All");
         saveBtn.addActionListener(e -> saveAllData());
 
         btnPanel.add(issueBtn);
         btnPanel.add(editBtn);
         btnPanel.add(deleteBtn);
-        btnPanel.add(changeStatusBtn);  // Replaces "Mark Collected" button
+        btnPanel.add(changeStatusBtn);
+        btnPanel.add(slipBtn);  // ADD THIS
         btnPanel.add(new JSeparator(SwingConstants.VERTICAL));
         btnPanel.add(saveBtn);
         panel.add(btnPanel, BorderLayout.SOUTH);
-        return panel;
-    
-    }
+        return panel;    
+}
 
 
 
@@ -460,7 +484,7 @@ public class HealthcareGUI extends JFrame {
         // --- ADD ---
         JButton addBtn = new JButton("Add Clinician");
         addBtn.addActionListener(e -> {
-            JTextField idField = new JTextField("C" + String.format("%03d", model.getRowCount() + 13));
+            JTextField idField = new JTextField();
             JTextField firstNameField = new JTextField();
             JTextField lastNameField = new JTextField();
             String[] titles = {"Dr.", "Consultant", "Senior Nurse", "Practice Nurse", "Staff Nurse"};

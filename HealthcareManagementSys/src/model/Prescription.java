@@ -16,7 +16,7 @@ public class Prescription {
     private String clinicianId;           // GP or Specialist who issued
     private String medication;
     private String dosage;
-    private String duration;              // How long to take it
+    private String duration;             
     private String status;                // "Issued", "Collected", "Expired"
     private LocalDate issuedDate;
     private String notes;

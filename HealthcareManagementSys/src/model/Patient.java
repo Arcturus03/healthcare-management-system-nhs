@@ -14,24 +14,24 @@ public class Patient extends User {
 
     // === PATIENT-SPECIFIC ATTRIBUTES ===
     private String nhsNumber;              // NHS number is unique to patients
-    private String medicalHistory;         // Summary of medical background
-    private List<String> allergies;        // Allergies patient has
-    private String accountInfo;            // Account type/status
+    private String medicalHistory;         
+    private List<String> allergies;        
+    private String accountInfo;            
 
     // === CONSTRUCTOR ===
     /**
      * Constructor to create a new Patient
      *
-     * @param userId Unique patient ID
-     * @param name Full name
-     * @param email Email address
-     * @param phone Phone number
-     * @param nhsNumber NHS number
+     * @param userId 
+     * @param name
+     * @param email
+     * @param phone 
+     * @param nhsNumber
      */
     public Patient(String userId, String name, String email, String phone, String nhsNumber) {
-        super(userId, name, email, phone);  // Call parent constructor
+        super(userId, name, email, phone);  
         this.nhsNumber = nhsNumber;
-        this.allergies = new ArrayList<>();  // Initialize empty allergy list
+        this.allergies = new ArrayList<>();  
         this.accountInfo = "Active";
     }
 
@@ -42,10 +42,9 @@ public class Patient extends User {
     }
 
     // === PATIENT-SPECIFIC METHODS ===
-
-    /**
-     * Register a new account for the patient
-     */
+    
+    //Register a new account for the patient
+    
     public void registerAccount() {
         this.accountInfo = "Active";
         System.out.println(name + " has registered an account.");

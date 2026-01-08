@@ -106,9 +106,9 @@ public class FileWriterUtil {
     }
 
 
-    /**
-     * Generates a readable text referral letter (Requirement: output text content)
-     */
+    
+    //Generates a readable text referral letter (Requirement: output text content)
+    
     public static void generateReferralLetter(Referral r, String filepath) throws IOException {
         FileWriter writer = new FileWriter(filepath);
         writer.write("================================================\n");
@@ -133,5 +133,43 @@ public class FileWriterUtil {
         writer.close();
         System.out.println("Referral letter generated: " + filepath);
     }
+
+
+    // Generates a readable prescription slip (Requirement: output text content)
+
+    public static void generatePrescriptionSlip(Prescription p, String filepath) throws IOException {
+        FileWriter writer = new FileWriter(filepath);
+        writer.write("================================================\n");
+        writer.write("              NHS PRESCRIPTION SLIP             \n");
+        writer.write("================================================\n\n");
+        writer.write("Date Issued: " + p.getIssuedDate() + "\n");
+        writer.write("Prescription ID: " + p.getPrescriptionId() + "\n\n");
+        
+        writer.write("PATIENT ID: " + p.getPatientId() + "\n");
+        writer.write("PRESCRIBER: " + p.getClinicianId() + "\n\n");
+        
+        writer.write("------------------------------------------------\n");
+        writer.write("MEDICATION DETAILS\n");
+        writer.write("------------------------------------------------\n");
+        writer.write("Drug:    " + p.getMedication() + "\n");
+        writer.write("Dosage:  " + p.getDosage() + "\n");
+        writer.write("Status:  " + p.getStatus() + "\n\n");
+        
+        writer.write("------------------------------------------------\n");
+        writer.write("INSTRUCTIONS\n");
+        writer.write("------------------------------------------------\n");
+        writer.write("Take as directed by your healthcare provider.\n");
+        writer.write("Complete the full course of medication.\n\n");
+        
+        writer.write("================================================\n");
+        writer.write("        NHS Healthcare Management System        \n");
+        writer.write("================================================\n");
+        
+        writer.close();
+        System.out.println("Prescription slip generated: " + filepath);
+    }
+
+
+
 }
 

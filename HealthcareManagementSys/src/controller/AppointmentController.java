@@ -6,26 +6,14 @@ import java.util.*;
 /**
  * AppointmentController manages all Appointment operations (CRUD).
  *
- * NOTE (IMPORTANT):
- * This controller is written to match Appointment.java exactly:
- * - Uses clinicianId (not gpId)
- * - Uses dateTime as a single field (not appointmentDate + time)
- *
  * @author Hrithik Chandra
  * @version 1.0
  */
 public class AppointmentController {
 
-    // === INSTANCE VARIABLES ===
-    // This list holds ALL appointments in the system.
-    // Each time an appointment is added/removed, this list changes.
     private List<Appointment> appointments;
 
-    /**
-     * CONSTRUCTOR
-     *
-     * Initializes an empty appointment list ready to use.
-     */
+    // Constructor
     public AppointmentController() {
         this.appointments = new ArrayList<>();
     }
@@ -139,7 +127,7 @@ public class AppointmentController {
     }
 
     /**
-     * DELETE: Remove an appointment from the system.
+     * Remove an appointment from the system.
      *
      * @param appointmentId Appointment ID to delete
      * @return true if deleted, false if not found
@@ -157,7 +145,7 @@ public class AppointmentController {
     }
 
     /**
-     * READ: Get all appointments (safe copy).
+     * READ/Get all appointments 
      *
      * @return Copy of all appointments
      */
@@ -166,7 +154,7 @@ public class AppointmentController {
     }
 
     /**
-     * COUNT: Total number of appointments.
+     * Total number of appointments.
      *
      * @return Total appointments
      */

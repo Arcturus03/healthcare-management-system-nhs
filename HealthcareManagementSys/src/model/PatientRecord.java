@@ -16,8 +16,8 @@ public class PatientRecord {
     // === ATTRIBUTES ===
     private String recordId;
     private String patientId;
-    private List<String> entries;         // Log of all events/notes
-    private List<String> currentMedications;  // Current medications
+    private List<String> entries;         
+    private List<String> currentMedications;  
     private String allergies;
     private LocalDate createdDate;
     private LocalDate lastUpdated;

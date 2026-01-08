@@ -33,9 +33,8 @@ public abstract class User {
 
     // === COMMON METHODS (All subclasses inherit these) ===
 
-    /**
-     * User logs into the system
-     */
+    //User logs into the system
+    
     public void login() {
         System.out.println(name + " has logged in.");
     }
@@ -70,55 +69,30 @@ public abstract class User {
     public abstract void performRole();
 
     // === GETTERS (Access attributes from outside) ===
-
-    /**
-     * Get the user's ID
-     * @return userId
-     */
     public String getUserId() {
         return userId;
     }
 
-    /**
-     * Get the user's name
-     * @return name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * Get the user's email
-     * @return email
-     */
     public String getEmail() {
         return email;
     }
 
-    /**
-     * Get the user's phone
-     * @return phone
-     */
     public String getPhone() {
         return phone;
     }
 
     // === SETTERS (Modify attributes from outside) ===
 
-    /**
-     * Set the user's name
-     * @param name New name
-     */
     public void setName(String name) {
         if (name != null && !name.isEmpty()) {
             this.name = name;
         }
     }
 
-    /**
-     * Set the user's email
-     * @param email New email
-     */
     public void setEmail(String email) {
         if (email != null && !email.isEmpty()) {
             this.email = email;

@@ -1,0 +1,26 @@
+================================================
+              NHS PRESCRIPTION SLIP             
+================================================
+
+Date Issued: 2026-01-08
+Prescription ID: RX010
+
+PATIENT ID: P005
+PRESCRIBER: C001
+
+------------------------------------------------
+MEDICATION DETAILS
+------------------------------------------------
+Drug:    Atorvastatin
+Dosage:  40mg
+Status:  Issued
+
+------------------------------------------------
+INSTRUCTIONS
+------------------------------------------------
+Take as directed by your healthcare provider.
+Complete the full course of medication.
+
+================================================
+        NHS Healthcare Management System        
+================================================

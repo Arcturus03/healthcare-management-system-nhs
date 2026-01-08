@@ -5,7 +5,8 @@ import java.util.*;
 
 /**
  * ClinicianController manages all Clinician operations (CRUD).
- *
+ *  Didn't add any more comments as I made this last minute
+ * 
  * @author Hrithik Chandra
  * @version 1.0
  */

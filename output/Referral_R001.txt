@@ -1,0 +1,22 @@
+================================================
+              NHS REFERRAL LETTER               
+================================================
+
+Date: 2026-01-08
+Urgency: Routine
+
+FROM: GP ID C001
+TO:   Specialist ID C005
+
+RE:   PATIENT P005
+
+Dear Colleague,
+
+I would appreciate your assessment of this patient.
+Reason for referral: Heart murmur investigation
+
+Clinical Summary:
+No summary provided.
+
+Sincerely,
+NHS GP Service
