@@ -6,6 +6,7 @@ import java.util.*;
 
 public class FileWriterUtil {
 
+    // write prescriptions to file
     public static void writePrescriptionsToFile(List<Prescription> prescriptions, String filepath) throws IOException {
         FileWriter writer = new FileWriter(filepath);
         writer.write("prescriptionId,patientId,medication,dosage,status\n");
@@ -21,6 +22,8 @@ public class FileWriterUtil {
         System.out.println("Prescriptions written to " + filepath);
     }
 
+
+    // write referrals to file
     public static void writeReferralsToFile(List<Referral> referrals, String filepath) throws IOException {
         FileWriter writer = new FileWriter(filepath);
         writer.write("referralId,patientId,fromGP,toSpecialist,reason,status,urgency\n");
@@ -38,6 +41,9 @@ public class FileWriterUtil {
         System.out.println("Referrals written to " + filepath);
     }
 
+
+
+    // write patients to file
     public static void writePatientsToFile(List<Patient> patients, String filepath) throws IOException {
         FileWriter writer = new FileWriter(filepath);
         writer.write("userId,name,nhsNumber,email,phone\n");
@@ -53,6 +59,8 @@ public class FileWriterUtil {
         System.out.println("Patients written to " + filepath);
     }
 
+
+    // write appointments to file
     public static void writeAppointmentsToFile(List<Appointment> appointments, String filepath) throws IOException {
         FileWriter writer = new FileWriter(filepath);
         writer.write("appointmentId,patientId,clinicianId,dateTime,status,reason\n");
@@ -68,6 +76,35 @@ public class FileWriterUtil {
         writer.close();
         System.out.println("Appointments written to " + filepath);
     }
+
+
+
+    // write clinicians to file
+    public static void writeCliniciansToFile(List<Clinician> clinicians, String filepath) throws IOException {
+        FileWriter writer = new FileWriter(filepath);
+        // Match original CSV header exactly
+        writer.write("clinician_id,first_name,last_name,title,speciality,gmc_number,phone_number,email,workplace_id,workplace_type,employment_status,start_date\n");
+
+        for (Clinician c : clinicians) {
+            writer.write(
+                c.getClinicianId() + "," +
+                c.getFirstName() + "," +
+                c.getLastName() + "," +
+                c.getTitle() + "," +
+                c.getSpeciality() + "," +
+                c.getGmcNumber() + "," +
+                c.getPhone() + "," +
+                c.getEmail() + "," +
+                c.getWorkplaceId() + "," +
+                c.getWorkplaceType() + "," +
+                c.getEmploymentStatus() + "," +
+                c.getStartDate() + "\n"
+            );
+        }
+        writer.close();
+        System.out.println("Clinicians written to " + filepath);
+    }
+
 
     /**
      * Generates a readable text referral letter (Requirement: output text content)

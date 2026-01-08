@@ -163,10 +163,10 @@ public class PrescriptionController {
      * @return true if updated, false if not found
      */
     public boolean updatePrescriptionDetails(String prescriptionId,
-                                             String newMedication,
-                                             String newDosage,
-                                             String newDuration,
-                                             String newNotes) {
+                                            String newMedication,
+                                            String newDosage,
+                                            String newDuration,
+                                            String newNotes) {
 
         Prescription existing = getPrescription(prescriptionId);
 

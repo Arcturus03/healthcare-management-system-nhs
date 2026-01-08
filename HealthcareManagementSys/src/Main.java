@@ -4,7 +4,7 @@ import view.HealthcareGUI;
 /**
  * Main Entry Point for the Healthcare Management System.
  */
-public class main {
+public class Main {
     public static void main(String[] args) {
         // Enforce thread safety for Swing components
         SwingUtilities.invokeLater(() -> {

@@ -36,6 +36,7 @@ public class DataLoader {
     }
 
 
+    // Load GPs from CSV
     public List<GP> loadGPs(String filepath) throws IOException {
         List<GP> gps = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(filepath));
@@ -63,6 +64,7 @@ public class DataLoader {
     }
 
 
+    // Load Appointments from CSV
     public List<Appointment> loadAppointments(String filepath) throws IOException {
         List<Appointment> appointments = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
@@ -92,6 +94,7 @@ public class DataLoader {
     }
 
 
+    // Load Prescriptions from CSV
     public List<Prescription> loadPrescriptions(String filepath) throws IOException {
         List<Prescription> prescriptions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
@@ -119,6 +122,9 @@ public class DataLoader {
         return prescriptions;
     }
 
+
+
+    // Load Referrals from CSV
     public List<Referral> loadReferrals(String filepath) throws IOException {
         List<Referral> referrals = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
@@ -148,4 +154,43 @@ public class DataLoader {
         System.out.println("Loaded " + referrals.size() + " referrals");
         return referrals;
     }
+
+
+    // Load Clinician from csv
+    public List<Clinician> loadClinicians(String filepath) throws IOException {
+        List<Clinician> clinicians = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(filepath))) {
+            String line;
+            reader.readLine(); // Skip header
+            // Header: clinician_id,first_name,last_name,title,speciality,gmc_number,phone_number,email,workplace_id,workplace_type,employment_status,start_date
+            //         0            1          2         3     4          5          6            7     8            9              10                11
+            
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(CSV_SPLIT_REGEX, -1);
+                if (parts.length >= 12) {
+                    Clinician c = new Clinician(
+                        parts[0].trim(),   // clinician_id
+                        parts[1].trim(),   // first_name
+                        parts[2].trim(),   // last_name
+                        parts[3].trim(),   // title
+                        parts[4].trim(),   // speciality
+                        parts[5].trim(),   // gmc_number
+                        parts[6].trim(),   // phone_number
+                        parts[7].trim(),   // email
+                        parts[8].trim(),   // workplace_id
+                        parts[9].trim(),   // workplace_type
+                        parts[10].trim(),  // employment_status
+                        parts[11].trim()   // start_date
+                    );
+                    clinicians.add(c);
+                }
+            }
+        }
+        System.out.println("Loaded " + clinicians.size() + " clinicians");
+        return clinicians;
+    }
+
+
+
+
 }
